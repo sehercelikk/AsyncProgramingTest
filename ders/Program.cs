@@ -85,3 +85,24 @@ joinThread1.Start();
 joinThread1.Join();
 joinThread2.Start();
 #endregion
+
+#region Thread'i İptal Etmek
+
+// İşaretle ve Bitir(Graceful ShotDown) mantığı ile belirli şart veya flag sağlandığında thread çalışması sona erer
+
+bool shouldStop= false;
+Thread stopThread = new(() =>
+{
+    while(!shouldStop)
+    {
+        Console.WriteLine("Thread Çalışıyor");
+        Thread.Sleep(1000);
+    }
+    Console.WriteLine("Thread İşlemi Sona Erdi");
+});
+
+stopThread.Start();
+Thread.Sleep(5000);
+shouldStop= true;
+
+#endregion
