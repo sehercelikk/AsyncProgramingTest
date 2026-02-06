@@ -63,3 +63,25 @@ Thread threadSleep = new(() =>
 
 threadSleep.Start();
 #endregion
+
+#region Join Metodu
+Thread joinThread1 = new(() =>
+{
+    for (int i = 0; i < 10; i++)
+    {
+        Console.WriteLine($"Thread1 - {i}");
+    }
+});
+
+Thread joinThread2 = new(() =>
+{
+    for(var i = 0; i<10;i++)
+    {
+        Console.WriteLine($"Thread2 - {i}");
+    }
+});
+
+joinThread1.Start();
+joinThread1.Join();
+joinThread2.Start();
+#endregion
