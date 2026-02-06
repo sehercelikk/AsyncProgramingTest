@@ -106,3 +106,23 @@ Thread.Sleep(5000);
 shouldStop= true;
 
 #endregion
+
+
+#region Interrupt Metodu
+// Bekleyen threadı uyandırmak  çalışanı kesintiye uğratmak
+Thread interThread = new(() =>
+{
+    try
+    {
+        Thread.Sleep(Timeout.Infinite);
+    }
+    catch (ThreadInterruptedException ex)
+    {
+
+    }
+});
+
+interThread.Start();
+interThread.Interrupt();
+
+#endregion
