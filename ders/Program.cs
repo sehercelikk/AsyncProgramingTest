@@ -126,3 +126,45 @@ interThread.Start();
 interThread.Interrupt();
 
 #endregion
+
+#region Spinning Örnek
+//Blockinge benzer yaklaşım. Thread lerin belli koşula karşı döngü ile bekletmeyi yani bloklatmayı sağlar.
+bool thread1Condidation = true;
+bool thread2Condidation = false;
+int spinningInt = 0;
+Thread spinnigThread1 = new(() =>
+{
+    while (thread1Condidation)
+    {
+        Console.WriteLine($"Thread Spinning 1 :{++spinningInt}");
+        Thread.Sleep(1000);
+        if (spinningInt == 10)
+        {
+            thread1Condidation = false;
+            thread2Condidation = true;
+        }
+
+    }
+});
+
+Thread spinnigThread2 = new(() =>
+{
+    while (true)
+    {
+       if(thread2Condidation)
+        {
+            Console.WriteLine($"Thread Spinning 2 :{spinningInt--}");
+            Thread.Sleep(1000);
+            if (spinningInt == 0)
+            {
+                thread2Condidation = false;
+                break;
+            }
+        }
+    }
+});
+
+spinnigThread1.Start();
+spinnigThread2.Start();
+
+#endregion
